@@ -1,0 +1,205 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudLearn Container Challenge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%);
+            border-radius: 20px;
+            margin: 0 auto 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+        }
+
+        h1 {
+            color: #1a1a2e;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .success-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            display: inline-block;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .info-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .info-card .label {
+            color: #64748b;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .info-card .value {
+            color: #1e293b;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #10b981;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .footer {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #0078d4;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        #app-info {
+            margin-top: 16px;
+            padding: 16px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            text-align: left;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🐳</div>
+        <h1>Container Challenge Complete!</h1>
+        <p class="subtitle">Azure Container Apps Deployment</p>
+        
+        <div class="success-badge">
+            ✓ Successfully Deployed
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="label">Platform</div>
+                <div class="value">Azure Container Apps</div>
+            </div>
+            <div class="info-card">
+                <div class="label">Runtime</div>
+                <div class="value">Node.js + Express</div>
+            </div>
+            <div class="info-card">
+                <div class="label">Registry</div>
+                <div class="value">Azure Container Registry</div>
+            </div>
+            <div class="info-card">
+                <div class="label">Ingress</div>
+                <div class="value">External (Public)</div>
+            </div>
+        </div>
+
+        <div class="status-indicator">
+            <span class="status-dot"></span>
+            Application Running
+        </div>
+
+        <div id="app-info">Loading application info...</div>
+
+        <p class="footer">
+            Built with ❤️ for <a href="https://cloudlearn.io" target="_blank">CloudLearn</a>
+        </p>
+    </div>
+
+    <script>
+        // Fetch and display app info
+        fetch('/api/info')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('app-info').innerHTML = 
+                    `<strong>App Info:</strong><br>` +
+                    `Name: ${data.name}<br>` +
+                    `Version: ${data.version}<br>` +
+                    `Environment: ${data.environment}<br>` +
+                    `Containerized: ${data.containerized}`;
+            })
+            .catch(error => {
+                document.getElementById('app-info').innerHTML = 
+                    '<span style="color: #ef4444;">Error loading app info</span>';
+            });
+    </script>
+</body>
+</html>
